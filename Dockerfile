@@ -5,8 +5,8 @@ ENV java_version=8.0.212 \
     java_hash=14136019014c020fee0fc13073d00388 \
     jetty_version=9.3.27.v20190418 \
     jetty_hash=7c7c80dd1c9f921771e2b1a05deeeec652d5fcaa \
-    idp_version=3.4.3 \
-    idp_hash=eb86bc7b6366ce2a44f97cae1b014d307b84257e3149469b22b2d091007309db \
+    idp_version=3.4.5 \
+    idp_hash=75a200b06be459db8f195caa40d5acc01e133cad9ebcc65cf00c324ae8321c4b \
     dta_hash=2f547074b06952b94c35631398f36746820a7697 \
     slf4j_version=1.7.25 \
     slf4j_hash=da76ca59f6a57ee3102f8f9bd9cee742973efa8a \
@@ -92,7 +92,7 @@ FROM centos:centos7
 LABEL maintainer="Unicon, Inc."\
       idp.java.version="8.0.212" \
       idp.jetty.version="9.3.27.v20190418" \
-      idp.version="3.4.3"
+      idp.version="3.4.5"
 
 ENV JETTY_HOME=/opt/jetty-home \
     JETTY_BASE=/opt/shib-jetty-base \
