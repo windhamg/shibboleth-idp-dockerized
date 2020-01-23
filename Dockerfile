@@ -1,12 +1,12 @@
 FROM centos:centos7 as temp
 
-ENV java_version=8.0.212 \
-    zulu_version=8.38.0.13 \
-    java_hash=14136019014c020fee0fc13073d00388 \
-    jetty_version=9.3.27.v20190418 \
-    jetty_hash=7c7c80dd1c9f921771e2b1a05deeeec652d5fcaa \
-    idp_version=3.4.5 \
-    idp_hash=75a200b06be459db8f195caa40d5acc01e133cad9ebcc65cf00c324ae8321c4b \
+ENV java_version=8.0.242 \
+    zulu_version=8.44.0.11 \
+    java_hash=2db117fcaeec0ccd00d08fc3bb374aa15d871a01120d7090cf91fe9764756ae9 \
+    jetty_version=9.4.26.v20200117 \
+    jetty_hash=31a157c493687e9b7be7366a5dc4ee7ef9cae1663ea279cd9fcf4070d53ef071 \
+    idp_version=3.4.6 \
+    idp_hash=a35ee8e0e8dafa3b66660b7df1762eea7876eabd38b06f34e45dc179745edc3c \
     dta_hash=2f547074b06952b94c35631398f36746820a7697 \
     slf4j_version=1.7.25 \
     slf4j_hash=da76ca59f6a57ee3102f8f9bd9cee742973efa8a \
@@ -24,14 +24,14 @@ RUN yum -y update \
     && yum -y clean all
 
 # Download Java, verify the hash, and install
-RUN wget -q http://cdn.azul.com/zulu/bin/zulu$zulu_version-ca-jdk$java_version-linux_x64.tar.gz \
-    && echo "$java_hash  zulu$zulu_version-ca-jdk$java_version-linux_x64.tar.gz" | md5sum -c - \
+RUN wget -q https://cdn.azul.com/zulu/bin/zulu$zulu_version-ca-jdk$java_version-linux_x64.tar.gz \
+    && echo "$java_hash  zulu$zulu_version-ca-jdk$java_version-linux_x64.tar.gz" | sha256sum -c - \
     && tar -zxvf zulu$zulu_version-ca-jdk$java_version-linux_x64.tar.gz -C /opt \
     && ln -s /opt/zulu$zulu_version-ca-jdk$java_version-linux_x64/jre/ /opt/jre-home
 
 # Download Jetty, verify the hash, and install, initialize a new base
-RUN wget -q http://central.maven.org/maven2/org/eclipse/jetty/jetty-distribution/$jetty_version/jetty-distribution-$jetty_version.tar.gz \
-    && echo "$jetty_hash  jetty-distribution-$jetty_version.tar.gz" | sha1sum -c - \
+RUN wget -q https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/$jetty_version/jetty-distribution-$jetty_version.tar.gz \
+    && echo "$jetty_hash  jetty-distribution-$jetty_version.tar.gz" | sha256sum -c - \
     && tar -zxvf jetty-distribution-$jetty_version.tar.gz -C /opt \
     && ln -s /opt/jetty-distribution-$jetty_version/ /opt/jetty-home
 
@@ -53,22 +53,22 @@ RUN wget -q https://build.shibboleth.net/nexus/content/repositories/releases/net
     && mv jetty9-dta-ssl-1.0.0.jar /opt/shib-jetty-base/lib/ext/
 
 # Download the slf4j library for Jetty logging, verify the hash, and place
-RUN wget -q http://central.maven.org/maven2/org/slf4j/slf4j-api/$slf4j_version/slf4j-api-$slf4j_version.jar \
+RUN wget -q https://repo1.maven.org/maven2/org/slf4j/slf4j-api/$slf4j_version/slf4j-api-$slf4j_version.jar \
     && echo "$slf4j_hash  slf4j-api-$slf4j_version.jar" | sha1sum -c - \
     && mv slf4j-api-$slf4j_version.jar /opt/shib-jetty-base/lib/logging/
 
 # Download the logback_classic library for Jetty logging, verify the hash, and place
-RUN wget -q http://central.maven.org/maven2/ch/qos/logback/logback-classic/$logback_version/logback-classic-$logback_version.jar \
+RUN wget -q https://repo1.maven.org/maven2/ch/qos/logback/logback-classic/$logback_version/logback-classic-$logback_version.jar \
     && echo "$logback_classic_hash  logback-classic-$logback_version.jar" | sha1sum -c - \
     && mv logback-classic-$logback_version.jar /opt/shib-jetty-base/lib/logging/
 
 # Download the logback-core library for Jetty logging, verify the hash, and place
-RUN wget -q http://central.maven.org/maven2/ch/qos/logback/logback-core/$logback_version/logback-core-$logback_version.jar \
+RUN wget -q https://repo1.maven.org/maven2/ch/qos/logback/logback-core/$logback_version/logback-core-$logback_version.jar \
     && echo "$logback_core_hash logback-core-$logback_version.jar" | sha1sum -c - \
     && mv logback-core-$logback_version.jar /opt/shib-jetty-base/lib/logging/
 
 # Download the logback-access library for Jetty logging, verify the hash, and place
-RUN wget -q http://central.maven.org/maven2/ch/qos/logback/logback-access/$logback_version/logback-access-$logback_version.jar \
+RUN wget -q https://repo1.maven.org/maven2/ch/qos/logback/logback-access/$logback_version/logback-access-$logback_version.jar \
     && echo "$logback_access_hash logback-access-$logback_version.jar" | sha1sum -c - \
     && mv logback-access-$logback_version.jar /opt/shib-jetty-base/lib/logging/
 
@@ -89,10 +89,10 @@ RUN mkdir /opt/shib-jetty-base/logs \
     
 FROM centos:centos7
 
-LABEL maintainer="Unicon, Inc."\
-      idp.java.version="8.0.212" \
-      idp.jetty.version="9.3.27.v20190418" \
-      idp.version="3.4.5"
+LABEL maintainer="Gary Windham"\
+      idp.java.version="8.0.242" \
+      idp.jetty.version="9.4.26.v20200117" \
+      idp.version="3.4.6"
 
 ENV JETTY_HOME=/opt/jetty-home \
     JETTY_BASE=/opt/shib-jetty-base \
