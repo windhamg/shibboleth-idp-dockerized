@@ -29,6 +29,11 @@ RUN wget -q https://cdn.azul.com/zulu/bin/zulu$zulu_version-ca-jdk$java_version-
     && tar -zxvf zulu$zulu_version-ca-jdk$java_version-linux_x64.tar.gz -C /opt \
     && ln -s /opt/zulu$zulu_version-ca-jdk$java_version-linux_x64/jre/ /opt/jre-home
 
+# Install JCE policy files
+RUN wget -q https://cdn.azul.com/zcek/bin/ZuluJCEPolicies.zip \
+    && unzip ZuluJCEPolicies.zip \
+    && mv -f ZuluJCEPolicies/*.jar /opt/jre-home/lib/security
+
 # Download Jetty, verify the hash, and install, initialize a new base
 RUN wget -q https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-distribution/$jetty_version/jetty-distribution-$jetty_version.tar.gz \
     && echo "$jetty_hash  jetty-distribution-$jetty_version.tar.gz" | sha256sum -c - \
