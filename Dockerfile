@@ -20,7 +20,7 @@ ENV JETTY_HOME=/opt/jetty-home \
     PATH=$PATH:$JRE_HOME/bin
 
 RUN yum -y update \
-    && yum -y install wget tar which \
+    && yum -y install wget tar which unzip \
     && yum -y clean all
 
 # Download Java, verify the hash, and install
