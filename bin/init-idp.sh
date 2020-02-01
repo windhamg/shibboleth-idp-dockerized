@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export JAVA_HOME=/opt/jre-home
+export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto
 export PATH=$PATH:$JAVA_HOME/bin
 
 cd /opt/shibboleth-idp/bin
