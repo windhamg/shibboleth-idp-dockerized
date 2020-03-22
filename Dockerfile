@@ -1,9 +1,9 @@
 FROM centos:centos7 as temp
 
-ENV jetty_version=9.4.26.v20200117 \
-    jetty_hash=31a157c493687e9b7be7366a5dc4ee7ef9cae1663ea279cd9fcf4070d53ef071 \
-    idp_version=3.4.6 \
-    idp_hash=a35ee8e0e8dafa3b66660b7df1762eea7876eabd38b06f34e45dc179745edc3c \
+ENV jetty_version=9.4.27.v20200227 \
+    jetty_hash=b47b0990493196acdb82325e355019485f96ee12f9bf3d4f47a9ac748ab3d56a \
+    idp_version=4.0.0 \
+    idp_hash=a9c2fb351b2e49313f2f185bc98d944544a38f42b9722dc96bda7427a29ea2bb \
     dta_hash=2f547074b06952b94c35631398f36746820a7697 \
     slf4j_version=1.7.25 \
     slf4j_hash=da76ca59f6a57ee3102f8f9bd9cee742973efa8a \
@@ -85,9 +85,9 @@ RUN mkdir /opt/shib-jetty-base/logs \
 FROM centos:centos7
 
 LABEL maintainer="Gary Windham"\
-      idp.java.version="8.0.242" \
-      idp.jetty.version="9.4.26.v20200117" \
-      idp.version="3.4.6"
+      idp.java.version="11.0.6" \
+      idp.jetty.version="9.4.27.20200227" \
+      idp.version="4.0.0"
 
 ENV JETTY_HOME=/opt/jetty-home \
     JETTY_BASE=/opt/shib-jetty-base \
